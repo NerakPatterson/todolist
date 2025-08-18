@@ -9,40 +9,48 @@ def display_menu():
     
 # Function to add a task to the list.
 def add_task():
-    task = input("Hurry up and enter task!: ")  # Prompt user to enter a new task
-    tasks.append(task)  # Add task to the list
+    task = input("Hurry up and enter task!: ")  
+    tasks.append(task)  
     print(f"Task '{task}' added successfully.")
         
 # Function to view all tasks in the tasks list.
 def view_task():
     if not tasks:
-        print("No tasks available stupid.")
+        print("No tasks available.")
     else:
         print("\nTasks:")
-        for task in tasks:
-            print(task)
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. {task}")
 
 # Function to delete a task from the tasks list.
 def delete_task():
     if not tasks:
-        print("No tasks to delete stupid.")
+        print("No tasks to delete.")
         return
     
     for i, task in enumerate(tasks, 1):
         print(f"{i}. {task}")
     
-    choice = int(input("Which task do you want to delete? ")) - 1
-    if 0 <= choice < len(tasks):
-        removed = tasks.pop(choice)
-        print(f"Task '{removed}' deleted.")
-    else:
-        print("Invalid choice Stupid.")
+    try:
+        choice = int(input("Which task do you want to delete? ")) - 1
+        if 0 <= choice < len(tasks):
+            removed = tasks.pop(choice)
+            print(f"Task '{removed}' deleted.")
+        else:
+            print("Invalid choice. Please enter a valid number.")
+    except ValueError:
+        print("Error: Please enter a number, not text.")
 
 # Main function (start of the program).
 def main():
     while True:
         display_menu()
-        choice = input("What would you like to do?: ")
+        choice = input("What would you like to do?: ").strip()
+
+        # validate menu choice
+        if choice not in ["1", "2", "3", "4"]:
+            print("Invalid input. Please enter 1, 2, 3, or 4.")
+            continue
         
         if choice == "1":
             add_task()
@@ -53,7 +61,5 @@ def main():
         elif choice == "4":
             print("Goodbye!")
             break
-        else:
-            print("Invalid input. Please try again stupid.")
 
 main()
